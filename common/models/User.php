@@ -190,5 +190,4 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(Rental::className(), ['user_id' => 'id']);
     }
 	
-   
 }

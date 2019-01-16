@@ -3,7 +3,7 @@
 namespace frontend\models;
 
 use Yii;
-
+use yii\data\ActiveDataProvider;
 /**
  * This is the model class for table "rental".
  *

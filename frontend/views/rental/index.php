@@ -38,7 +38,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'total_cost',
 			'user.username',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+			'template' => '{view}{myButton}',  // the default buttons + your custom button
+            'buttons' => [
+                'myButton' => function($url, $model, $key) {     // render your custom button
+				return Html::a('Pay', ['delete', 'id' => $model->rental_id], [
+            'class' => 'btn btn-primary btn-xs',
+            'data' => [
+                'confirm' => 'Please confirm payment',
+                'method' => 'post',
+            ],
+        ]) ;
+				}
+			],
         ],
+		 ],
     ]); ?>
 </div>

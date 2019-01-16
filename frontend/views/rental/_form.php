@@ -55,14 +55,12 @@ use common\models\User;
 			'startDate'=>'+1d'
         ]
 ]);?>
-	<?= $form->field($model, 'user_id')->widget(Select2::classname(), [
-					'data' => ArrayHelper :: map(user::find()->all(),'id','username'),
-					'language' => 'en',
-					'options' => ['placeholder' => 'Select a user', 'id' =>'username'],
-					'pluginOptions' => [
-						'allowClear' => true
-					],
-	]); ?>
+	
+	
+	<?= $form->field($model, 'user_id')->dropDownList(ArrayHelper::map(user::find()
+	->where(['id' =>  Yii::$app->user->identity->id ])->all(),'id','username'));
+	
+	 ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
