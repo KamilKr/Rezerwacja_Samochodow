@@ -27,10 +27,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-     
+		'rowOptions' => function($model){
+				if($model->paid_status == 0){
+					return['class'=>'danger'];
+				} else
+					{
+					return['class'=>'success'];
+				}
+				
+			},
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
+			
 			'pickup_date',
             'dropoff_date',
             'carCar.car_name',
@@ -42,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'template' => '{view}{myButton}',  // the default buttons + your custom button
             'buttons' => [
                 'myButton' => function($url, $model, $key) {     // render your custom button
-				return Html::a('Pay', ['delete', 'id' => $model->rental_id], [
+				return Html::a('Pay', ['index','paid_status' => $model->paid_status], [
             'class' => 'btn btn-primary btn-xs',
             'data' => [
                 'confirm' => 'Please confirm payment',
@@ -51,6 +59,12 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ;
 				}
 			],
+			
+			'visibleButtons' => [
+			'myButton' => function ($model, $key, $index) {
+            return $model->paid_status!== 1;
+         }
+    ]
         ],
 		 ],
     ]); ?>

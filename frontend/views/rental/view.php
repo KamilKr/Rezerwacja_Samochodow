@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'dropoff_date',
             'carCar.car_name',
             'departmentDepartment.department_name',
+			 'departmentDepartment.department_town',
             'total_cost',
 			'user.username'
         ],

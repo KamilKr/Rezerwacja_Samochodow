@@ -3,7 +3,7 @@
 namespace frontend\models;
 
 use Yii;
-use yii\data\ActiveDataProvider;
+
 /**
  * This is the model class for table "rental".
  *
@@ -14,6 +14,7 @@ use yii\data\ActiveDataProvider;
  * @property int $department_department_id
  * @property double $total_cost
  * @property int $user_id
+ * @property int $paid_status
  *
  * @property Cars $carCar
  * @property Departments $departmentDepartment
@@ -39,6 +40,7 @@ class Rental extends \yii\db\ActiveRecord
             [['dropoff_date', 'pickup_date'], 'safe'],
             [['car_car_id', 'department_department_id', 'user_id'], 'integer'],
             [['total_cost'], 'number'],
+            [['paid_status'], 'string', 'max' => 1],
             [['car_car_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cars::className(), 'targetAttribute' => ['car_car_id' => 'car_id']],
             [['department_department_id'], 'exist', 'skipOnError' => true, 'targetClass' => Departments::className(), 'targetAttribute' => ['department_department_id' => 'department_id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -58,6 +60,7 @@ class Rental extends \yii\db\ActiveRecord
             'department_department_id' => Yii::t('app', 'Department Department ID'),
             'total_cost' => Yii::t('app', 'Total Cost'),
             'user_id' => Yii::t('app', 'User ID'),
+            'paid_status' => Yii::t('app', 'Paid Status'),
         ];
     }
 
@@ -84,5 +87,4 @@ class Rental extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
-	
 }
