@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\data\ActiveDataProvider;
+use frontend\models\Rental;
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\models\RentalSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -18,6 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Rental', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+	
+	<?php $dataProvider = new ActiveDataProvider([
+    'query' => rental::find()->
+                  where(['user_id' =>  Yii::$app->user->identity->id ]),
+]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
