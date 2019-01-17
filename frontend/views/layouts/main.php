@@ -44,6 +44,9 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Rejestracja', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Zaloguj', 'url' => ['/site/login']];
     } else {
+		$menuItems[] = ['label' => 'Finanse', 'url' => ['rental/index']];
+		$menuItems[] = ['label' => 'Oddziały', 'url' => ['departments/index']];
+		$menuItems[] = ['label' => 'Oferta', 'url' => ['cars/index']];		
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
@@ -52,7 +55,7 @@ AppAsset::register($this);
             )
             . Html::endForm()
             . '</li>';
-			 $menuItems[] = ['label' => 'Finanse', 'url' => ['rental/index']];
+			 
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],

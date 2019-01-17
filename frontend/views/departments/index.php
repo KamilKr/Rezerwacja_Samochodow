@@ -14,6 +14,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+	
+	<?php
+if(!Yii::$app->user->isGuest){
+    if(Yii::$app->user->identity->user_adm == true){
+      echo Html::a('Add Department', ['create'], 
+                  ['class' => 'btn btn-success']);
+ 
+}}
+
+		?>
 
    
 

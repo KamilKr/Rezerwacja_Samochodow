@@ -10,14 +10,15 @@ use Yii;
  * @property int $rental_id
  * @property string $dropoff_date
  * @property string $pickup_date
- * @property int $car_id
- * @property int $user_id
- * @property int $department_id
+ * @property int $car_car_id
+ * @property int $department_department_id
  * @property double $total_cost
+ * @property int $user_id
+ * @property int $paid_status
  *
- * @property Cars $car
+ * @property Cars $carCar
+ * @property Departments $departmentDepartment
  * @property User $user
- * @property Departments $department
  */
 class Rental extends \yii\db\ActiveRecord
 {
@@ -35,16 +36,14 @@ class Rental extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['dropoff_date', 'pickup_date', 'car_id', 'user_id', 'department_id', 'total_cost'], 'required'],
+            [['dropoff_date', 'pickup_date', 'car_car_id', 'department_department_id', 'total_cost', 'user_id'], 'required'],
             [['dropoff_date', 'pickup_date'], 'safe'],
-            [['car_id', 'user_id', 'department_id'], 'integer'],
+            [['car_car_id', 'department_department_id', 'user_id'], 'integer'],
             [['total_cost'], 'number'],
-            [['car_id'], 'unique'],
-            [['user_id'], 'unique'],
-            [['department_id'], 'unique'],
-            [['car_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cars::className(), 'targetAttribute' => ['car_id' => 'car_id']],
+            [['paid_status'], 'string', 'max' => 1],
+            [['car_car_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cars::className(), 'targetAttribute' => ['car_car_id' => 'car_id']],
+            [['department_department_id'], 'exist', 'skipOnError' => true, 'targetClass' => Departments::className(), 'targetAttribute' => ['department_department_id' => 'department_id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
-            [['department_id'], 'exist', 'skipOnError' => true, 'targetClass' => Departments::className(), 'targetAttribute' => ['department_id' => 'department_id']],
         ];
     }
 
@@ -54,22 +53,31 @@ class Rental extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'rental_id' => Yii::t('app', 'Rental ID'),
-            'dropoff_date' => Yii::t('app', 'Dropoff Date'),
-            'pickup_date' => Yii::t('app', 'Pickup Date'),
-            'car_id' => Yii::t('app', 'Car ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'department_id' => Yii::t('app', 'Department ID'),
-            'total_cost' => Yii::t('app', 'Total Cost'),
+            'rental_id' => 'Rental ID',
+            'dropoff_date' => 'Dropoff Date',
+            'pickup_date' => 'Pickup Date',
+            'car_car_id' => 'Car Car ID',
+            'department_department_id' => 'Department Department ID',
+            'total_cost' => 'Total Cost',
+            'user_id' => 'User ID',
+            'paid_status' => 'Paid Status',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCar()
+    public function getCarCar()
     {
-        return $this->hasOne(Cars::className(), ['car_id' => 'car_id']);
+        return $this->hasOne(Cars::className(), ['car_id' => 'car_car_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDepartmentDepartment()
+    {
+        return $this->hasOne(Departments::className(), ['department_id' => 'department_department_id']);
     }
 
     /**
@@ -78,13 +86,5 @@ class Rental extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDepartment()
-    {
-        return $this->hasOne(Departments::className(), ['department_id' => 'department_id']);
     }
 }

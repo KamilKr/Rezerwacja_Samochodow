@@ -1,10 +1,10 @@
 <?php
 
-namespace frontend\models;
+namespace backend\controllers;
 
 use Yii;
-use frontend\models\Rental;
-use frontend\models\RentalSearch;
+use backend\models\Rental;
+use backend\models\RentalSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -124,14 +124,4 @@ class RentalController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-	
-	 public function actionPay($paid_status)
-    {
-        $this->findModel($paid_status);
-		if($paid_status==0) $paid_status=1;
-
-        return $this->redirect(['index']);
-    }
-	
-	
 }
